@@ -23,12 +23,12 @@ const sidebar_menu = [
     //     path: '/products',
     //     title: 'Products',
     // },
-    {
-        id: 3,
-        // icon: ShippingIcon,
-        path: '/add-blogs',
-        title: 'Add Blogs',
-    },
+    // {
+    //     id: 3,
+    //     // icon: ShippingIcon,
+    //     path: '/add-blogs',
+    //     title: 'Add Blogs',
+    // },
     {
         id: 4,
         // icon: ShippingIcon,
@@ -41,36 +41,36 @@ const sidebar_menu = [
         path: '/users',
         title: 'Users',
     },
-    {
-        id: 6,
-        // icon: ProductIcon,
-        path: '/add-users',
-        title: 'Add Users',
-    },
+    // {
+    //     id: 6,
+    //     // icon: ProductIcon,
+    //     path: '/add-users',
+    //     title: 'Add Users',
+    // },
     {
         id: 7,
         // icon: ProductIcon,
         path: '/categories',
         title: 'Categories',
     },
-    {
-        id: 8,
-        // icon: ProductIcon,
-        path: '/add-categories',
-        title: 'Add Categories',
-    },
+    // {
+    //     id: 8,
+    //     // icon: ProductIcon,
+    //     path: '/add-categories',
+    //     title: 'Add Categories',
+    // },
     {
         id: 9,
         // icon: ProductIcon,
         path: '/main-text',
         title: 'Main Text'
     },
-    {
-        id: 10,
-        // icon: ProductIcon,
-        path: '/add-main-text',
-        title: 'Add Main Text'
-    }
+    // {
+    //     id: 10,
+    //     // icon: ProductIcon,
+    //     path: '/add-main-text',
+    //     title: 'Add Main Text'
+    // }
     // {
     //     id: 4,
     //     icon: UserIcon,

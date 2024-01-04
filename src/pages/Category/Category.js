@@ -1,141 +1,169 @@
+import React, { useState, useEffect } from "react";
+import DashboardHeader from "../../components/DashboardHeader";
 
-import React, {useState, useEffect} from 'react';
-import DashboardHeader from '../../components/DashboardHeader';
+import all_orders from "../../constants/orders";
+import { calculateRange, sliceData } from "../../utils/table-pagination";
 
-import all_orders from '../../constants/orders';
-import {calculateRange, sliceData} from '../../utils/table-pagination';
+import "../styles.css";
+import axios from "axios";
+import DoneIcon from "../../assets/icons/done.svg";
+import CancelIcon from "../../assets/icons/cancel.svg";
+import RefundedIcon from "../../assets/icons/refunded.svg";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
-import '../styles.css';
-import axios from 'axios';
-import DoneIcon from '../../assets/icons/done.svg';
-import CancelIcon from '../../assets/icons/cancel.svg';
-import RefundedIcon from '../../assets/icons/refunded.svg';
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+function Category() {
+  const [search, setSearch] = useState("");
+  const [orders, setOrders] = useState(all_orders);
+  const [data, setData] = useState([]); // For pagination [1, 2, 3, 4, 5
+  const [page, setPage] = useState(1);
+  const [pagination, setPagination] = useState([]);
+  const bearerToken = useSelector((state) => state.auth.token); // Replace 'YOUR_BEARER_TOKEN_HERE' with your actual bearer token
+  const fetchData = async () => {
+    const apiUrl = "https://leaseovername.com/api/admin/category/index"; // Replace with your API endpoint
 
-function Category () {
-    const [search, setSearch] = useState('');
-    const [orders, setOrders] = useState(all_orders);
-    const [data, setData] = useState([]); // For pagination [1, 2, 3, 4, 5
-    const [page, setPage] = useState(1);
-    const [pagination, setPagination] = useState([]);
-    const bearerToken = useSelector(state=>state.auth.token); // Replace 'YOUR_BEARER_TOKEN_HERE' with your actual bearer token
-    const fetchData = async () => {
-        const apiUrl = 'https://leaseovername.com/api/admin/category/index'; // Replace with your API endpoint
-     
-        const config = {
-          headers: {
-            'Authorization': `Bearer ${bearerToken}`
-          }
-        };
-  
-        try {
-          const response = await axios.get(apiUrl, config);
-          console.log('GET request response:', response.data);
-          setData(response.data.data)
-          // Handle the response data here
-        } catch (error) {
-          console.error('Error in GET request:', error);
-          // Handle errors
-        }
-      };
-    useEffect(() => {
-     
-    
-        fetchData();
-      }, []);
-
-
-   
-
-    
-    const __handleSearch = (event) => {
-        setSearch(event.target.value);
-        if (event.target.value !== '') {
-            let search_results = orders.filter((item) =>
-                item.first_name.toLowerCase().includes(search.toLowerCase()) ||
-                item.last_name.toLowerCase().includes(search.toLowerCase()) ||
-                item.product.toLowerCase().includes(search.toLowerCase())
-            );
-            setOrders(search_results);
-        }
-        else {
-            __handleChangePage(1);
-        }
+    const config = {
+      headers: {
+        Authorization: `Bearer ${bearerToken}`,
+      },
     };
 
-    const __handleChangePage = (new_page) => {
-        setPage(new_page);
-        setOrders(sliceData(data, new_page, 5));
+    try {
+      const response = await axios.get(apiUrl, config);
+      console.log("GET request response:", response.data);
+      setData(response.data.data);
+      // Handle the response data here
+    } catch (error) {
+      console.error("Error in GET request:", error);
+      // Handle errors
     }
-    const navigate = useNavigate();
-    const handleRouteChange = (url, datas) => {
-        navigate(url, { state: { data: datas } });
-      };
-      const deleteCategory = async (id) => {
-        try {
-          const formData = new FormData();
-          formData.append('id', id);
-      
-          const response = await fetch('https://leaseovername.com/api/admin/category/delete', {
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${bearerToken}`
-            },
-            body: formData // Set the FormData object as the body of the request
-          });
-      
-          if (response.ok) {
-            console.log('Category deleted successfully');
-            fetchData();
-            // Handle further actions upon successful deletion here
-          } else {
-            throw new Error('Failed to delete category');
-          }
-        } catch (error) {
-          console.error(error);
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const __handleSearch = (event) => {
+    setSearch(event.target.value);
+    if (event.target.value !== "") {
+      let search_results = orders.filter(
+        (item) =>
+          item.first_name.toLowerCase().includes(search.toLowerCase()) ||
+          item.last_name.toLowerCase().includes(search.toLowerCase()) ||
+          item.product.toLowerCase().includes(search.toLowerCase())
+      );
+      setOrders(search_results);
+    } else {
+      __handleChangePage(1);
+    }
+  };
+
+  const __handleChangePage = (new_page) => {
+    setPage(new_page);
+    setOrders(sliceData(data, new_page, 5));
+  };
+  const navigate = useNavigate();
+  const handleRouteChange = (url, datas) => {
+    navigate(url, { state: { data: datas } });
+  };
+  const deleteCategory = async (id) => {
+    try {
+      const formData = new FormData();
+      formData.append("id", id);
+
+      const response = await fetch(
+        "https://leaseovername.com/api/admin/category/delete",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${bearerToken}`,
+          },
+          body: formData, // Set the FormData object as the body of the request
         }
-      };
-      
-    return(
-        <div className='dashboard-content'>
-            <DashboardHeader
-                btnText="New Blog" />
+      );
 
-            <div className='dashboard-content-container'>
-                <div className='dashboard-content-header'>
-                    <h2>Category </h2>
-                    <div className='dashboard-content-search'>
-                        <input
-                            type='text'
-                            value={search}
-                            placeholder='Search..'
-                            className='dashboard-content-input'
-                            onChange={e => __handleSearch(e)} />
-                    </div>
-                </div>
+      if (response.ok) {
+        console.log("Category deleted successfully");
+        fetchData();
+        // Handle further actions upon successful deletion here
+      } else {
+        throw new Error("Failed to delete category");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-                <table>
-                    <thead>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>ACTIONS</th>
-                    </thead>
+  return (
+    <div className="dashboard-content">
+      <DashboardHeader btnText="New Blog" />
 
-                    {data.length !== 0 ?
-                        <tbody>
-                            {data.map((order, index) => (
-                                <tr key={index}>
-                                    <td><span>{index + 1}</span></td>
-                                    <td><span>{order?.title}</span></td>
-                                    <td><span><div><button onClick={()=>{handleRouteChange(`/edit-category/${order.id}`,order.id)}}>Edit</button ><button onClick={()=>{deleteCategory(order.id)}}>Delete</button></div></span></td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    : null}
-                </table>
+      <div className="dashboard-content-container">
+        <div className="dashboard-content-header">
+          <h2>Category </h2>
+          <div className="dashboard-content-search">
+            <input
+              type="text"
+              value={search}
+              placeholder="Search.."
+              className="dashboard-content-input"
+              onChange={(e) => __handleSearch(e)}
+            />
+          </div>
+        </div>
 
-                {/* {data?.length !== 0 ?
+        <table>
+          <thead>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>ACTIONS</th>
+          </thead>
+
+          {data.length !== 0 ? (
+            <tbody>
+              {data.map((order, index) => (
+                <tr key={index}>
+                  <td>
+                    <span>{index + 1}</span>
+                  </td>
+                  <td>
+                    <span>{order?.title}</span>
+                  </td>
+                  <td>
+                    {order.slug}
+                  </td>
+                  <td>
+                    <span>
+                      <div>
+                        <button
+                          onClick={() => {
+                            handleRouteChange(
+                              `/edit-category/${order.id}`,
+                              order.id
+                            );
+                          }}
+                          style={{ maxWidth: "120px" }}
+                        >
+                          Edit
+                        </button>
+                        <button
+                          style={{ maxWidth: "120px" }}
+                          onClick={() => {
+                            deleteCategory(order.id);
+                          }}
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          ) : null}
+        </table>
+
+        {/* {data?.length !== 0 ?
                     <div className='dashboard-content-footer'>
                         {pagination.map((item, index) => (
                             <span 
@@ -151,9 +179,9 @@ function Category () {
                         <span className='empty-table'>No data</span>
                     </div>
                 } */}
-            </div>
-        </div>
-    )
+      </div>
+    </div>
+  );
 }
 
-export default Category
+export default Category;

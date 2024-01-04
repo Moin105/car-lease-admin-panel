@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route ,Navigate} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './pages/Login/Login';
 import { useSelector } from 'react-redux';
 import Main from './Main/Main';
@@ -14,10 +14,16 @@ function App() {
           path="/"
           element={<Login />}
         />
-      {token ? (
-          <Route path="/" element={<Navigate to="/blogs" />} />
+        {token ? (
+          <Route
+            path="/*"
+            element={<Main />}
+          />
         ) : (
-          <Route path="/*" element={<div>No Existing Page</div>} />
+          <Route
+            path="/*"
+            element={<div>No Existing Page</div>}
+          />
         )}
       </Routes>
     </Router>
