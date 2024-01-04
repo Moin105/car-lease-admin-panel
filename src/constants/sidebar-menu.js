@@ -10,19 +10,19 @@ const sidebar_menu = [
     //     path: '/',
     //     title: 'Dashboard',
     // },
-    {
-        id: 1,
-        // icon: ProductIcon,
-        path: '/orders',
-        title: 'Orders',
-    },
+    // {
+    //     id: 1,
+    //     // icon: ProductIcon,
+    //     path: '/orders',
+    //     title: 'Orders',
+    // },
  
-    {
-        id: 2,
-        // icon: ShippingIcon,
-        path: '/products',
-        title: 'Products',
-    },
+    // {
+    //     id: 2,
+    //     // icon: ShippingIcon,
+    //     path: '/products',
+    //     title: 'Products',
+    // },
     {
         id: 3,
         // icon: ShippingIcon,
