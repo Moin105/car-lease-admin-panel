@@ -14,16 +14,10 @@ function App() {
           path="/"
           element={<Login />}
         />
-        {token ? (
-          <Route
-            path="/*"
-            element={<Main />}
-          />
+      {token ? (
+          <Route path="/" element={<Navigate to="/blogs" />} />
         ) : (
-          <Route
-            path="/*"
-            element={<div>No Existing Page</div>}
-          />
+          <Route path="/*" element={<div>No Existing Page</div>} />
         )}
       </Routes>
     </Router>
