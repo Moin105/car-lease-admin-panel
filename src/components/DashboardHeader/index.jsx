@@ -21,7 +21,7 @@ function DashboardHeader ({ btnText, onClick }) {
                 setActive(element.id);
             }
         });
-    }, [location.pathname])
+    }, [location.pathname]) 
 
     const __navigate = (id) => {
         setActive(id);
@@ -32,7 +32,7 @@ function DashboardHeader ({ btnText, onClick }) {
             {/* {btnText && 
                 <button className='dashbord-header-btn' onClick={onClick}>{btnText}</button>
             } */}
-        {active == 4 &&       <button onClick={()=>{handleRouteChange(`/add-blog`)}}  className='dashbord-header-btn'>Add Blogs</button>}
+        {active == 4 &&       <button onClick={()=>{handleRouteChange(`/add-blogs`)}}  className='dashbord-header-btn'>Add New Blogs</button>}
         {active == 5 &&       <button onClick={()=>{handleRouteChange(`/add-users`)}}  className='dashbord-header-btn'>Add Users</button>}
         {active == 7 &&       <button onClick={()=>{handleRouteChange(`/add-categories`)}}  className='dashbord-header-btn'>Add Categories</button>}
         {active == 9 &&       <button onClick={()=>{handleRouteChange(`/add-main-text`)}}  className='dashbord-header-btn'>Add Main Text</button>}
