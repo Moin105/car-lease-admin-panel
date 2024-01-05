@@ -23,7 +23,7 @@ function Blogs() {
     formData.append('title',name);
     formData.append('image',image);
     formData.append('description',description);
-     
+    formData.append('category_id',category_id);
   
     console.log("first",formData)
     try {
